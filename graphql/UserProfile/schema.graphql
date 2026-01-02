@@ -1,0 +1,61 @@
+type UserProfile {
+    id: ID!
+    user_id: Int!
+    full_name: String!
+    birth_date: Date
+    phone_number: String
+    email: String
+    address: String
+    identity_number: String
+    identity_type: String
+    identity_photo: String
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+    user: User @belongsTo
+}
+
+input CreateUserProfileInput {
+  user_id: Int!
+  full_name: String!
+  birth_date: Date
+  phone_number: String
+  email: String
+  address: String
+  identity_number: String
+  identity_type: String
+  identity_photo: String
+}
+
+input UpdateUserProfileInput {
+  full_name: String
+  birth_date: Date
+  phone_number: String
+  email: String
+  address: String
+  identity_number: String
+  identity_type: String
+  identity_photo: String
+}
+
+extend type Query {
+    allUserProfiles: [UserProfile!]!
+        @field(resolver: "App\\GraphQL\\UserProfile\\Queries\\UserProfileQuery@all")
+}
+
+extend type Mutation {
+    createUserProfile(input: CreateUserProfileInput! @spread): UserProfile
+        @create(model: "App\\Models\\UserProfile\\UserProfile")
+
+    updateUserProfile(id: ID! @eq, input: UpdateUserProfileInput! @spread): UserProfile
+        @update(model: "App\\Models\\UserProfile\\UserProfile")
+
+    deleteUserProfile(id: ID! @eq): UserProfile
+        @delete(model: "App\\Models\\UserProfile\\UserProfile")
+
+    restoreUserProfile(id: ID!): UserProfile
+        @field(resolver: "App\\GraphQL\\UserProfile\\Mutations\\UserProfileMutation@restore")
+
+    forceDeleteUserProfile(id: ID!): UserProfile
+        @field(resolver: "App\\GraphQL\\UserProfile\\Mutations\\UserProfileMutation@forceDelete")
+}

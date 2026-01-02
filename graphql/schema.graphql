@@ -1,0 +1,22 @@
+"A file upload scalar"
+scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+#import Booking/schema.graphql
+#import BookingItem/schema.graphql
+#import BookingPassenger/schema.graphql
+#import Hotel/schema.graphql
+#import HotelRoom/schema.graphql
+#import Payment/schema.graphql
+#import RoomType/schema.graphql
+#import Transport/schema.graphql
+#import TransportSchedule/schema.graphql
+#import User/schema.graphql
+#import UserProfile/schema.graphql
+#import HotelRoomPhoto/schema.graphql
+#import BookingGuest/schema.graphql
+#import TransportLocation/schema.graphql
+#import PaymentVerification/schema.graphql

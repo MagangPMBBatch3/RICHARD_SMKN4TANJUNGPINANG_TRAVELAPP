@@ -1,0 +1,38 @@
+type BookingItem {
+    id: ID!
+    booking_id: ID!
+    item_type: String!
+    reference_id: ID!
+    quantity: Int!
+    price: Float!
+    subtotal: Float!
+    check_in: String
+    check_out: String
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+
+    booking: Booking @belongsTo
+
+    hotel_room: HotelRoom
+        @belongsTo(relation: "hotelRoom", key: "reference_id")
+
+    transport_schedule: TransportSchedule
+        @belongsTo(relation: "transportSchedule", key: "reference_id")
+}
+
+input BookingItemInput {
+    item_type: String!
+    reference_id: ID!
+    quantity: Int!
+    check_in: String
+    check_out: String
+}
+
+input UpdateBookingItemInput {
+    reference_id: ID!
+    quantity: Int!
+    check_in: Date
+    check_out: Date
+}
+

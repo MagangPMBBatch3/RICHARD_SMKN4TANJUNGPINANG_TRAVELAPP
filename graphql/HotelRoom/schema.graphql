@@ -1,0 +1,78 @@
+type HotelRoom {
+    id: ID!
+    hotel_id: Int!
+    room_type_id: Int!
+    name: String!
+    description: String
+    price: Float!
+    quantity: Int!
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+    hotel: Hotel @belongsTo
+    room_type: RoomType @belongsTo
+    photos: [HotelRoomPhoto] @hasMany
+}
+
+input CreateHotelRoomInput {
+    hotel_id: Int!
+    room_type_id: Int!
+    name: String!
+    description: String
+    price: Float!
+    quantity: Int!
+}
+
+input UpdateHotelRoomInput {
+    hotel_id: Int
+    room_type_id: Int
+    name: String
+    description: String
+    price: Float
+    quantity: Int
+}
+
+input CreateHotelRoomWithPhotosInput {
+    hotel_id: ID!
+    room_type_id: ID!
+    name: String!
+    description: String
+    price: Float!
+    quantity: Int
+    photos: [String]
+}
+
+extend type Query {
+    allHotelRooms: [HotelRoom!]! 
+        @all(model: "App\\Models\\HotelRoom\\HotelRoom")
+
+    getHotelRoom(id: ID! @eq): HotelRoom 
+        @find(model: "App\\Models\\HotelRoom\\HotelRoom")
+
+    getRoomsByHotel(hotel_id: Int! @eq): [HotelRoom!]! 
+        @field(resolver: "App\\GraphQL\\HotelRoom\\Queries\\HotelRoomQuery@getByHotel")
+
+    getHotelRoomDetail(id: ID! @eq): HotelRoom 
+        @find(model: "App\\Models\\HotelRoom\\HotelRoom")
+
+    checkRoomAvailability(room_id: ID!, check_in: Date!, check_out: Date!): Boolean!
+        @field(resolver: "App\\GraphQL\\HotelRoom\\Queries\\HotelRoomQuery@checkAvailability")
+
+}
+
+extend type Mutation {
+    createHotelRoomWithPhotos(input: CreateHotelRoomWithPhotosInput!): HotelRoom
+        @field(resolver: "App\\GraphQL\\HotelRoom\\Mutations\\HotelRoomMutation@createHotelRoomWithPhotos")
+
+    updateHotelRoom(id: ID!, input: UpdateHotelRoomInput!): HotelRoom
+        @field(resolver: "App\\GraphQL\\HotelRoom\\Mutations\\HotelRoomMutation@updateHotelRoom")
+
+    deleteHotelRoom(id: ID!): HotelRoom
+        @field(resolver: "App\\GraphQL\\HotelRoom\\Mutations\\HotelRoomMutation@deleteHotelRoom")
+
+    restoreHotelRoom(id: ID!): HotelRoom
+        @field(resolver: "App\\GraphQL\\HotelRoom\\Mutations\\HotelRoomMutation@restore")
+
+    forceDeleteHotelRoom(id: ID!): HotelRoom
+        @field(resolver: "App\\GraphQL\\HotelRoom\\Mutations\\HotelRoomMutation@forceDelete")
+}

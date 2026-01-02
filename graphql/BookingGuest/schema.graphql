@@ -1,0 +1,14 @@
+type BookingGuest {
+    id: ID!
+    booking_id: ID!
+    full_name: String!
+    phone: String
+    email: String
+    is_primary: Boolean!
+}
+
+input BookingGuestInput {
+    full_name: String!
+    phone: String
+    email: String
+}

@@ -1,0 +1,29 @@
+type PaymentVerification {
+  id: ID!
+  status: String!
+  note: String
+  created_at: DateTime
+
+  payment: Payment @belongsTo
+  admin: User @belongsTo
+}
+
+extend type Query {
+
+  paymentVerifications: [PaymentVerification!]!
+    @all(model: "App\\Models\\PaymentVerification\\PaymentVerification")
+
+}
+
+extend type Mutation {
+
+  verifyPayment(
+    id: ID!
+    status: String!
+    note: String
+  ): PaymentVerification!
+  @field(
+    resolver: "App\\GraphQL\\PaymentVerification\\Mutations\\PaymentVerificationMutation@verify"
+  )
+
+}

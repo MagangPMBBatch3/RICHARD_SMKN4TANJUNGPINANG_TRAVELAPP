@@ -1,0 +1,43 @@
+type RoomType {
+    id: ID!
+    name: String!
+    description: String
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+
+    hotel_rooms: [HotelRoom] @hasMany
+}
+
+input CreateRoomTypeInput {
+    name: String!
+    description: String
+}
+
+input UpdateRoomTypeInput {
+    name: String
+    description: String
+}
+
+extend type Query {
+    allRoomTypes: [RoomType!]! @all(model: "App\\Models\\RoomType\\RoomType")
+    getRoomType(id: ID! @eq): RoomType @find(model: "App\\Models\\RoomType\\RoomType")
+}
+
+extend type Mutation {
+    createRoomType(input: CreateRoomTypeInput! @spread): RoomType 
+        @create(model: "App\\Models\\RoomType\\RoomType")
+
+    updateRoomType(id: ID! @eq, input: UpdateRoomTypeInput! @spread): RoomType 
+        @update(model: "App\\Models\\RoomType\\RoomType")
+
+    deleteRoomType(id: ID! @eq): RoomType 
+        @delete(model: "App\\Models\\RoomType\\RoomType")
+
+    restoreRoomType(id: ID!): RoomType 
+        @field(resolver: "App\\GraphQL\\RoomType\\Mutations\\RoomTypeMutation@restore")
+
+    forceDeleteRoomType(id: ID!): RoomType 
+        @field(resolver: "App\\GraphQL\\RoomType\\Mutations\\RoomTypeMutation@forceDelete")
+}
+

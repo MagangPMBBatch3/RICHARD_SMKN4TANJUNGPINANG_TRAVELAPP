@@ -1,0 +1,47 @@
+type Payment {
+  id: ID!
+  booking_id: ID!
+  amount: Float!
+  payment_method: String
+  proof: String
+  paid_at: DateTime
+  status: String!
+  created_at: DateTime
+  updated_at: DateTime
+
+  booking: Booking @belongsTo
+}
+
+extend type Mutation {
+
+  uploadPaymentProof(
+    booking_id: ID!
+    amount: Float!
+    payment_method: String
+    proof: Upload!
+  ): Payment!
+    @field(resolver: "App\\GraphQL\\Payment\\Mutations\\PaymentMutation@uploadProof")
+
+  confirmPayment(
+    payment_id: ID!
+    status: String!
+    note: String
+  ): Payment!
+    @field(resolver: "App\\GraphQL\\Payment\\Mutations\\PaymentMutation@confirm")
+
+  rejectPayment(
+    payment_id: ID!
+  ): Payment!
+  @field(
+    resolver: "App\\GraphQL\\Payment\\Mutations\\PaymentMutation@reject"
+  )
+}
+
+extend type Query {
+  pendingPayments: [Payment!]!
+    @field(resolver: "App\\GraphQL\\Payment\\Queries\\PaymentQuery@pending")
+
+  paymentDetail(id: ID!): Payment
+    @field(resolver: "App\\GraphQL\\Payment\\Queries\\PaymentQuery@detail")
+
+}

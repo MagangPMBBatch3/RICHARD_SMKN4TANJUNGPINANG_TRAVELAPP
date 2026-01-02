@@ -1,0 +1,54 @@
+type Hotel {
+    id: ID!
+    name: String!
+    location: String!
+    description: String
+    photo: String
+    photo_url: String @field(resolver: "App\\GraphQL\\Hotel\\Resolver\\HotelResolver@photoUrl")
+    max_room_price: Float @field(resolver: "App\\GraphQL\\Hotel\\Resolver\\HotelResolver@maxRoomPrice")
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+
+    hotel_rooms: [HotelRoom!]! @hasMany
+}
+
+input CreateHotelInput {
+    name: String!
+    location: String!
+    description: String
+    photo: Upload
+}
+
+input UpdateHotelInput {
+    id: ID!
+    name: String
+    location: String
+    description: String
+    photo: Upload
+}
+
+extend type Query {
+    allHotels: [Hotel!]! 
+        @field(resolver: "App\\GraphQL\\Hotel\\Resolver\\HotelResolver@all")
+
+    findHotel(id: ID!): Hotel 
+        @field(resolver: "App\\GraphQL\\Hotel\\Resolver\\HotelResolver@find")
+}
+
+extend type Mutation {
+    createHotel(input: CreateHotelInput!): Hotel 
+        @field(resolver: "App\\GraphQL\\Hotel\\Resolver\\HotelResolver@create")
+
+    updateHotel(input: UpdateHotelInput!): Hotel 
+        @field(resolver: "App\\GraphQL\\Hotel\\Resolver\\HotelResolver@update")
+
+    deleteHotel(id: ID!): Boolean 
+        @field(resolver: "App\\GraphQL\\Hotel\\Resolver\\HotelResolver@delete")
+
+    restoreHotel(id: ID!): Hotel 
+        @field(resolver: "App\\GraphQL\\Hotel\\Mutations\\HotelMutation@restore")
+    
+    forceDeleteHotel(id: ID!): Hotel 
+        @field(resolver: "App\\GraphQL\\Hotel\\Mutations\\HotelMutation@forceDelete")
+}

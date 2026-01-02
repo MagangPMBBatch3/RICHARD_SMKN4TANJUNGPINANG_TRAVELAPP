@@ -1,0 +1,47 @@
+type TransportLocation {
+  id: ID!
+  type: String!
+  name: String!
+  code: String
+  city: String!
+  photo: String
+  created_at: DateTime
+  updated_at: DateTime
+
+  departureSchedules: [TransportSchedule!]!
+  arrivalSchedules: [TransportSchedule!]!
+}
+
+extend type Query {
+  transportLocations(type: String): [TransportLocation!]!
+    @field(resolver: "App\\GraphQL\\TransportLocation\\Queries\\TransportLocationQuery@list")
+
+  transportLocation(id: ID!): TransportLocation
+    @field(resolver: "App\\GraphQL\\TransportLocation\\Queries\\TransportLocationQuery@detail")
+}
+
+extend type Mutation {
+  createTransportLocation(
+    type: String!
+    name: String!
+    code: String
+    city: String!
+    photo: Upload
+  ): TransportLocation!
+    @field(resolver: "App\\GraphQL\\TransportLocation\\Mutations\\TransportLocationMutation@create")
+
+  updateTransportLocation(
+    id: ID!
+    type: String
+    name: String
+    code: String
+    city: String
+    photo: Upload
+  ): TransportLocation!
+    @field(resolver: "App\\GraphQL\\TransportLocation\\Mutations\\TransportLocationMutation@update")
+
+  deleteTransportLocation(
+    id: ID!
+  ): Boolean!
+    @field(resolver: "App\\GraphQL\\TransportLocation\\Mutations\\TransportLocationMutation@delete")
+}

@@ -1,0 +1,58 @@
+type TransportSchedule {
+  id: ID!
+  transport_id: ID!
+  origin_location_id: ID!
+  destination_location_id: ID!
+  departure_time: DateTime!
+  arrival_time: DateTime
+  price: Float!
+
+  transport: Transport
+  originLocation: TransportLocation
+  destinationLocation: TransportLocation
+
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+extend type Query {
+  transportSchedulesByTransport(transport_id: ID!): [TransportSchedule!]!
+    @field(resolver: "App\\GraphQL\\TransportSchedule\\Queries\\TransportScheduleQuery@byTransport")
+
+  transportSchedulesByOrigin(location_id: ID!): [TransportSchedule!]!
+    @field(resolver: "App\\GraphQL\\TransportSchedule\\Queries\\TransportScheduleQuery@byOrigin")
+
+  transportSchedulesByDestination(location_id: ID!): [TransportSchedule!]!
+    @field(resolver: "App\\GraphQL\\TransportSchedule\\Queries\\TransportScheduleQuery@byDestination")
+
+  transportSchedule(id: ID!): TransportSchedule
+    @field(resolver: "App\\GraphQL\\TransportSchedule\\Queries\\TransportScheduleQuery@find")
+}
+
+
+extend type Mutation {
+  createTransportSchedule(
+    transport_id: ID!
+    origin_location_id: ID!
+    destination_location_id: ID!
+    departure_time: DateTime!
+    arrival_time: DateTime
+    price: Float!
+  ): TransportSchedule!
+    @field(resolver: "App\\GraphQL\\TransportSchedule\\Mutations\\TransportScheduleMutation@create")
+
+  updateTransportSchedule(
+    id: ID!
+    origin_location_id: ID
+    destination_location_id: ID
+    departure_time: DateTime
+    arrival_time: DateTime
+    price: Float
+  ): TransportSchedule!
+    @field(resolver: "App\\GraphQL\\TransportSchedule\\Mutations\\TransportScheduleMutation@update")
+
+  deleteTransportSchedule(
+    id: ID!
+  ): Boolean!
+    @field(resolver: "App\\GraphQL\\TransportSchedule\\Mutations\\TransportScheduleMutation@delete")
+}

@@ -1,0 +1,47 @@
+type Transport {
+  id: ID!
+  type: String!
+  name: String!
+  code: String
+  capacity: Int
+  price_per_seat: Float
+  photo: String
+  created_at: DateTime
+  updated_at: DateTime
+}
+
+extend type Query {
+  transports: [Transport!]!
+    @field(resolver: "App\\GraphQL\\Transport\\Queries\\TransportQuery@list")
+
+  transport(id: ID!): Transport
+    @field(resolver: "App\\GraphQL\\Transport\\Queries\\TransportQuery@detail")
+}
+
+extend type Mutation {
+  createTransport(
+    type: String!
+    name: String!
+    code: String
+    capacity: Int
+    price_per_seat: Float
+    photo: Upload
+  ): Transport!
+    @field(resolver: "App\\GraphQL\\Transport\\Mutations\\TransportMutation@create")
+
+  updateTransport(
+    id: ID!
+    type: String
+    name: String
+    code: String
+    capacity: Int
+    price_per_seat: Float
+    photo: Upload
+  ): Transport!
+    @field(resolver: "App\\GraphQL\\Transport\\Mutations\\TransportMutation@update")
+
+  deleteTransport(
+    id: ID!
+  ): Boolean!
+    @field(resolver: "App\\GraphQL\\Transport\\Mutations\\TransportMutation@delete")
+}

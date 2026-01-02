@@ -1,0 +1,47 @@
+type Booking {
+    id: ID!
+    booking_code: String!
+    user_id: ID!
+    booking_type: String!
+    total_price: Float!
+    status: String!
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+
+    user: User @belongsTo
+    items: [BookingItem!]! @hasMany
+    guests: [BookingGuest!] @hasMany
+}
+
+input BookingInput {
+    items: [BookingItemInput!]!
+    passengers: [BookingGuestInput!]
+}
+
+extend type Query {
+    myBookings: [Booking!]!
+        @field(resolver: "App\\GraphQL\\Booking\\Queries\\MyBookingQuery@__invoke")
+
+    getBooking(id: ID!): Booking
+        @field(resolver: "App\\GraphQL\\Booking\\Queries\\MyBookingQuery@detail")
+
+    allBookings( search: String status: String
+    ): [Booking!]!
+        @field(resolver: "App\\GraphQL\\Booking\\Queries\\AdminBookingQuery@index")
+
+    adminGetBooking(id: ID!): Booking
+        @field(resolver: "App\\GraphQL\\Booking\\Queries\\AdminBookingQuery@detail")
+}
+
+extend type Mutation {
+    createBooking(input: BookingInput!): Booking!
+        @field(resolver: "App\\GraphQL\\Booking\\Mutations\\BookingMutation@createBooking")
+
+    deleteBooking(id: ID!): Boolean!
+        @field(resolver: "App\\GraphQL\\Booking\\Mutations\\BookingMutation@deleteBooking")
+
+    updateMyBooking(id: ID!items: [UpdateBookingItemInput!]!): Booking!
+        @field(resolver: "App\\GraphQL\\Booking\\Mutations\\BookingMutation@update")
+
+}

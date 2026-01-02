@@ -1,0 +1,57 @@
+type BookingPassenger {
+    id: ID!
+    booking_id: ID!
+    user_id: ID
+    full_name: String!
+    birth_date: Date
+    identity_number: String
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+
+    booking: Booking @belongsTo
+    user: User @belongsTo
+}
+
+input CreateBookingPassengerInput {
+    booking_id: ID!
+    user_id: ID
+    full_name: String!
+    birth_date: Date
+    identity_number: String
+}
+
+input UpdateBookingPassengerInput {
+    user_id: ID
+    full_name: String
+    birth_date: Date
+    identity_number: String
+}
+
+extend type Query {
+    allBookingPassengers: [BookingPassenger!]! 
+        @all(model: "App\\Models\\BookingPassenger\\BookingPassenger")
+
+    getBookingPassenger(id: ID! @eq): BookingPassenger 
+        @find(model: "App\\Models\\BookingPassenger\\BookingPassenger")
+
+    getPassengersByBooking(booking_id: ID! @eq): [BookingPassenger!]! 
+        @field(resolver: "App\\GraphQL\\BookingPassenger\\Queries\\BookingPassengerQuery@getByBooking")
+}
+
+extend type Mutation {
+    createBookingPassenger(input: CreateBookingPassengerInput! @spread): BookingPassenger 
+        @create(model: "App\\Models\\BookingPassenger\\BookingPassenger")
+
+    updateBookingPassenger(id: ID! @eq, input: UpdateBookingPassengerInput! @spread): BookingPassenger 
+        @update(model: "App\\Models\\BookingPassenger\\BookingPassenger")
+
+    deleteBookingPassenger(id: ID! @eq): BookingPassenger 
+        @delete(model: "App\\Models\\BookingPassenger\\BookingPassenger")
+
+    addPassengersToBooking(
+        booking_id: ID!
+        passengers: [CreateBookingPassengerInput!]!
+    ): [BookingPassenger]
+        @field(resolver: "App\\GraphQL\\BookingPassenger\\Mutations\\BookingPassengerMutation@addPassengers")
+}

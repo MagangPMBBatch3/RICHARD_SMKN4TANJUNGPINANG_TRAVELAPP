@@ -1,0 +1,42 @@
+type HotelRoomPhoto {
+    id: ID!
+    hotel_room_id: Int!
+    photo: String!
+    photo_url: String @field(resolver: "App\\GraphQL\\HotelRoomPhoto\\Resolver\\HotelRoomPhotoResolver@photoUrl")
+    created_at: DateTime
+    updated_at: DateTime
+    deleted_at: DateTime
+
+    room: HotelRoom @belongsTo
+}
+
+extend type Query {
+    allHotelRoomPhotos: [HotelRoomPhoto] @all
+    hotelRoomPhotos(hotel_room_id: ID!): [HotelRoomPhoto]
+        @field(resolver: "App\\GraphQL\\HotelRoomPhoto\\Queries\\HotelRoomPhotoQuery")
+}
+
+input CreateHotelRoomPhotoInput {
+    hotel_room_id: Int!
+    photo: Upload!
+}
+
+input UpdateHotelRoomPhotoInput {
+    hotel_room_id: Int
+    photo: String
+}
+
+extend type Mutation {
+    createHotelRoomPhoto(input: CreateHotelRoomPhotoInput! @spread): HotelRoomPhoto
+        @create(model: "App\\Models\\HotelRoomPhoto\\HotelRoomPhoto")
+
+    updateHotelRoomPhoto(id: ID! @eq, input: UpdateHotelRoomPhotoInput! @spread): HotelRoomPhoto
+        @update(model: "App\\Models\\HotelRoomPhoto\\HotelRoomPhoto")
+
+    deleteHotelRoomPhoto(id: ID! @eq): HotelRoomPhoto
+        @delete(model: "App\\Models\\HotelRoomPhoto\\HotelRoomPhoto")
+
+    uploadHotelRoomPhoto(hotel_room_id: Int!, photo: Upload!): HotelRoomPhoto 
+        @field(resolver: "App\\GraphQL\\HotelRoomPhoto\\Mutations\\HotelRoomPhotoMutation@upload")
+
+}
