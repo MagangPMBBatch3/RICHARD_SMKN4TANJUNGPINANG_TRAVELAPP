@@ -34,17 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return res.json();
     }
 
-    /* =====================
-       SUMMARY
-    ===================== */
     summary.innerHTML = `
         <p><b>Schedule ID:</b> ${SCHEDULE_ID}</p>
         <p><b>Jumlah:</b> ${QTY}</p>
     `;
 
-    /* =====================
-       SUBMIT BOOKING
-    ===================== */
     btnSubmit.addEventListener("click", async () => {
 
         const input = {

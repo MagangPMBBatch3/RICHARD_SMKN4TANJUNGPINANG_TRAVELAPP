@@ -10,16 +10,12 @@ use Exception;
 
 class HotelRoomMutation
 {
-    /**
-     * Create Hotel Room with Photos (base64)
-     */
     public function createHotelRoomWithPhotos($_, array $args)
     {
         DB::beginTransaction();
         try {
             $input = $args['input'];
 
-            // Simpan data hotel room utama
             $room = HotelRoom::create([
                 'hotel_id' => $input['hotel_id'],
                 'room_type_id' => $input['room_type_id'],
@@ -28,7 +24,6 @@ class HotelRoomMutation
                 'quantity' => $input['quantity'] ?? 0,
             ]);
 
-            // Simpan foto (kalau ada)
             if (!empty($input['photos'])) {
                 foreach ($input['photos'] as $b64) {
                     $photoPath = $this->saveBase64Photo($b64, 'hotel_rooms');
@@ -47,9 +42,6 @@ class HotelRoomMutation
         }
     }
 
-    /**
-     * Update Hotel Room
-     */
     public function updateHotelRoom($_, array $args)
     {
         $room = HotelRoom::findOrFail($args['id']);
@@ -66,9 +58,6 @@ class HotelRoomMutation
         return $room;
     }
 
-    /**
-     * Delete Hotel Room (soft delete)
-     */
     public function deleteHotelRoom($_, array $args)
     {
         $room = HotelRoom::findOrFail($args['id']);
@@ -76,9 +65,6 @@ class HotelRoomMutation
         return $room;
     }
 
-    /**
-     * Restore soft deleted Hotel Room
-     */
     public function restore($_, array $args)
     {
         $room = HotelRoom::withTrashed()->findOrFail($args['id']);
@@ -86,9 +72,6 @@ class HotelRoomMutation
         return $room;
     }
 
-    /**
-     * Permanently delete Hotel Room
-     */
     public function forceDelete($_, array $args)
     {
         $room = HotelRoom::withTrashed()->findOrFail($args['id']);
@@ -96,15 +79,11 @@ class HotelRoomMutation
         return $room;
     }
 
-    /**
-     * Helper: Simpan foto base64 ke storage/app/public
-     */
     private function saveBase64Photo($base64, $folder = 'hotel_rooms')
     {
-        // Contoh: data:image/png;base64,xxxxx
         if (preg_match('/^data:image\/(\w+);base64,/', $base64, $type)) {
             $image = substr($base64, strpos($base64, ',') + 1);
-            $type = strtolower($type[1]); // jpg, png, gif
+            $type = strtolower($type[1]); 
             $image = base64_decode($image);
             $fileName = uniqid() . '.' . $type;
             $filePath = $folder . '/' . $fileName;

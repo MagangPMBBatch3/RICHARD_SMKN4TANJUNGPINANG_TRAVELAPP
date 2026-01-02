@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="p-6">
-    <!-- Header -->
     <div class="flex justify-between items-center mb-6">
         <div>
             <h1 id="locationName"
@@ -19,7 +18,6 @@
         </a>
     </div>
 
-    <!-- Route -->
     <div id="loadingIndicator"
          class="text-center text-gray-500 my-8">
         Memuat rute...

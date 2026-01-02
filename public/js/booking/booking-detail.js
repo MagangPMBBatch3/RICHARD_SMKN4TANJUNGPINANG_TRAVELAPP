@@ -7,9 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnEditBooking")?.addEventListener("click", goToEdit);
 });
 
-/* ===========================
-   GRAPHQL HELPER
-=========================== */
 async function gql(query, variables = {}) {
     const res = await fetch(API_URL, {
         method: "POST",
@@ -30,9 +27,6 @@ async function gql(query, variables = {}) {
     return json.data;
 }
 
-/* ===========================
-   FORMAT DATE
-=========================== */
 function formatDate(date) {
     if (!date) return "-";
     return new Date(date).toLocaleDateString("id-ID", {
@@ -42,9 +36,6 @@ function formatDate(date) {
     });
 }
 
-/* ===========================
-   LOAD BOOKING DETAIL
-=========================== */
 async function loadBooking() {
     const query = IS_ADMIN
         ? `
@@ -118,13 +109,11 @@ async function loadBooking() {
 
     const booking = IS_ADMIN ? data.adminGetBooking : data.getBooking;
 
-    /* HEADER */
     document.getElementById("bookingCode").innerText = booking.booking_code;
     document.getElementById("bookingStatus").innerText = booking.status;
     document.getElementById("totalPrice").innerText =
         "Rp " + Number(booking.total_price).toLocaleString("id-ID");
 
-    /* HOTEL ITEM */
     const hotelItem = booking.items.find(i => i.item_type === "hotel_room");
 
     if (hotelItem) {
@@ -135,7 +124,6 @@ async function loadBooking() {
         document.getElementById("checkOut").innerText = formatDate(hotelItem.check_out);
     }
 
-    /* TRANSPORT ITEMS */
     const transportItems = booking.items.filter(i => i.item_type === "transport_schedule");
 
     if (transportItems.length > 0) {
@@ -167,7 +155,6 @@ async function loadBooking() {
         });
     }
 
-    /* GUESTS */
     const guestBody = document.getElementById("guestBody");
     guestBody.innerHTML = "";
 
@@ -192,9 +179,6 @@ async function loadBooking() {
     }
 }
 
-/* ===========================
-   DELETE BOOKING
-=========================== */
 async function deleteBooking() {
     if (!confirm("Yakin ingin menghapus booking ini?")) return;
 
@@ -213,9 +197,6 @@ async function deleteBooking() {
     }
 }
 
-/* ===========================
-   GO TO EDIT
-=========================== */
 function goToEdit() {
     window.location.href = `/booking/${BOOKING_ID}/edit`;
 }

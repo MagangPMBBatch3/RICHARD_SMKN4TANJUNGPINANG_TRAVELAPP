@@ -24,7 +24,6 @@ class BookingItemResolver
 
             if (isset($args['quantity'])) {
 
-                // restore previous
                 if ($item->item_type === 'hotel_room') {
                     HotelRoom::where('id', $item->reference_id)
                         ->increment('available_room', $item->quantity);
@@ -33,7 +32,6 @@ class BookingItemResolver
                         ->increment('seat_available', $item->quantity);
                 }
 
-                // apply new
                 if ($item->item_type === 'hotel_room') {
                     HotelRoom::where('id', $item->reference_id)
                         ->decrement('available_room', $args['quantity']);
@@ -55,7 +53,6 @@ class BookingItemResolver
     {
         $item = BookingItem::findOrFail($args['id']);
 
-        // restore seat / room
         if ($item->item_type === 'hotel_room') {
             HotelRoom::where('id', $item->reference_id)
                 ->increment('available_room', $item->quantity);

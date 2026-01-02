@@ -28,10 +28,6 @@ class BookingItem extends Model
         return $this->belongsTo(Booking::class);
     }
 
-    /* =========================
-       RELATIONS
-    ========================= */
-
     public function hotelRoom()
     {
         return $this->belongsTo(
@@ -48,9 +44,6 @@ class BookingItem extends Model
         );
     }
 
-    /* =========================
-       ACCESSORS (OPTIONAL)
-    ========================= */
 
     public function getItemAttribute()
     {

@@ -46,7 +46,6 @@ class BookingItemMutation
                 'subtotal' => $subtotal
             ]);
 
-            // Update booking total_price (add subtotal)
             $booking->total_price = ($booking->total_price ?? 0) + $subtotal;
             $booking->save();
 

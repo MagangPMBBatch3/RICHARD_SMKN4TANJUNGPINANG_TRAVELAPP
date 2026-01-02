@@ -6,7 +6,6 @@
 
     <h1 class="text-2xl font-bold mb-6">📘 Semua Booking</h1>
 
-    <!-- 🔍 SEARCH + STATUS FILTER -->
     <div class="flex gap-3 mb-4">
 
         <input type="text"
@@ -23,7 +22,6 @@
 
     </div>
 
-    <!-- TABLE -->
     <div class="bg-white shadow rounded p-4">
         <table class="w-full text-sm border">
             <thead class="bg-gray-100">

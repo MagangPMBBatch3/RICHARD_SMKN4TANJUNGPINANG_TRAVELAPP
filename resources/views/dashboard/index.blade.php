@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="p-6">
-    <!-- Header -->
     <div class="flex justify-between items-center bg-white shadow rounded-xl p-5 mb-6">
         <div>
             <h1 class="text-xl font-semibold text-gray-800">
@@ -19,7 +18,6 @@
                 {{ Auth::user()->name ?? 'Admin' }} ▼
             </button>
 
-            <!-- Dropdown Menu -->
             <div id="menuDropdown" class="hidden absolute right-0 top-12 w-44 bg-white rounded-lg shadow-lg border">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -29,7 +27,6 @@
         </div>
     </div>
 
-    <!-- Dashboard Content -->
     <div class="bg-gray-50 p-6 rounded-xl shadow-inner border border-gray-100">
         <h2 class="text-lg font-bold mb-2">Selamat datang di Dashboard</h2>
         <p class="text-gray-600">

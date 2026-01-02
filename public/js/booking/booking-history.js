@@ -1,9 +1,5 @@
 document.addEventListener('DOMContentLoaded', fetchBookingHistory);
 
-/* =========================
-   HELPERS
-========================= */
-
 function csrf() {
     return document
         .querySelector('meta[name="csrf-token"]')
@@ -20,11 +16,6 @@ function formatDate(date) {
     });
 }
 
-/* =========================
-   DATA EXTRACTORS
-========================= */
-
-// ambil item hotel dari booking_items
 function getHotelItem(booking) {
     return booking.items?.find(
         item =>
@@ -64,10 +55,6 @@ function getGuestName(booking) {
 
     return primary.full_name;
 }
-
-/* =========================
-   MAIN FETCH
-========================= */
 
 function fetchBookingHistory() {
     fetch('/graphql', {
@@ -191,10 +178,6 @@ function fetchBookingHistory() {
         alert('Gagal memuat booking');
     });
 }
-
-/* =========================
-   NAVIGATION
-========================= */
 
 function viewDetail(id) {
     window.location.href = `/booking/${id}`;

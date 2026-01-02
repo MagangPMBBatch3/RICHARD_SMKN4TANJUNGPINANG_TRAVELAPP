@@ -13,7 +13,6 @@
         </a>
     </div>
 
-    <!-- Form Tambah/Edit Hotel -->
     <div class="bg-white rounded-2xl shadow p-6 mb-6">
         <h2 class="text-lg font-semibold mb-4" id="formTitle">Tambah Hotel</h2>
         <form id="hotelForm" enctype="multipart/form-data" class="space-y-4">
@@ -48,8 +47,7 @@
             </div>
         </form>
     </div>
-
-    <!-- Tabel Data Hotel -->
+    
     <div class="bg-white rounded-2xl shadow p-6">
         <h2 class="text-lg font-semibold mb-4">Daftar Hotel</h2>
         <div class="overflow-x-auto">

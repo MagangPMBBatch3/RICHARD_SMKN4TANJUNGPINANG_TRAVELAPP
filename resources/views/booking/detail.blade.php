@@ -5,7 +5,6 @@
 
     <h1 class="text-2xl font-bold mb-6">Detail Booking</h1>
 
-    <!-- Info Booking -->
     <div class="bg-white shadow rounded mb-6">
         <div class="grid grid-cols-3 gap-4 p-6 text-sm">
             <div>
@@ -25,7 +24,6 @@
         </div>
     </div>
 
-    <!-- Hotel -->
     <div class="bg-white shadow rounded mb-6 hidden" id="hotelSection">
         <h2 class="font-semibold px-6 pt-4">Hotel</h2>
 
@@ -36,7 +34,6 @@
         </div>
     </div>
 
-    <!-- Transport -->
 <div class="bg-white shadow rounded mb-6 hidden" id="transportSection">
     <h2 class="font-semibold px-6 pt-4">Transport</h2>
 
@@ -60,7 +57,6 @@
 </div>
 
 
-    <!-- Tamu -->
     <div class="bg-white shadow rounded mb-6">
         <h2 class="font-semibold px-6 pt-4">Tamu / Penumpang</h2>
 
@@ -76,7 +72,6 @@
         </table>
     </div>
 
-    <!-- Action -->
     <div class="flex gap-3">
         <button
             id="btnEditBooking"

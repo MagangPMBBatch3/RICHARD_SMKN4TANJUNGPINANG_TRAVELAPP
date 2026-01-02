@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
-    /* ================= ELEMENT ================= */
     const roomPhoto = document.getElementById("roomPhoto");
     const roomName = document.getElementById("roomName");
     const hotelName = document.getElementById("hotelName");
@@ -18,7 +17,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let MAX_QTY = 0;
     let ROOM = null;
 
-    /* ================= GRAPHQL HELPER ================= */
     async function graphql(query, variables = {}) {
         const res = await fetch("/graphql", {
             method: "POST",
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         return res.json();
     }
 
-    /* ================= LOAD ROOM ================= */
     const query = `
         query GetHotelRoom($id: ID!) {
             getHotelRoom(id: $id) {
@@ -73,7 +70,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     MAX_QTY = Number(ROOM.quantity);
     roomCount.max = MAX_QTY;
 
-    /* ================= HITUNG TOTAL ================= */
     function calculateTotal() {
     if (!totalPriceEl) return;
 

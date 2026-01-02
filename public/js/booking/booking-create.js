@@ -1,8 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =============================
-     * AMBIL PARAMETER URL
-     * ============================= */
     const params = new URLSearchParams(window.location.search);
 
     const ROOM_ID   = params.get("room_id");
@@ -15,26 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    /* =============================
-     * ELEMENT
-     * ============================= */
     const bookingFor = document.getElementById("bookingFor");
     const guestForm  = document.getElementById("guestForm");
     const btnSubmit  = document.getElementById("btnSubmit");
     const summary    = document.getElementById("summary");
 
-    /* =============================
-     * CSRF
-     * ============================= */
     function csrf() {
         return document
             .querySelector('meta[name="csrf-token"]')
             ?.getAttribute("content");
     }
 
-    /* =============================
-     * GRAPHQL HELPER
-     * ============================= */
     async function graphql(query, variables = {}) {
         const res = await fetch("/graphql", {
             method: "POST",
@@ -57,9 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return json.data;
     }
 
-    /* =============================
-     * TOGGLE TAMU
-     * ============================= */
     bookingFor?.addEventListener("change", () => {
         guestForm.classList.toggle(
             "hidden",
@@ -67,18 +52,12 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     });
 
-    /* =============================
-     * SUMMARY
-     * ============================= */
     summary.innerHTML = `
         <p><b>Check-in:</b> ${CHECK_IN}</p>
         <p><b>Check-out:</b> ${CHECK_OUT}</p>
         <p><b>Jumlah kamar:</b> ${QTY}</p>
     `;
 
-    /* =============================
-     * SUBMIT BOOKING
-     * ============================= */
     btnSubmit.addEventListener("click", async () => {
 
         btnSubmit.disabled = true;
@@ -97,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ]
             };
 
-            // 🔹 booking untuk orang lain
             if (bookingFor?.value === "other") {
 
                 const name  = document.getElementById("guestName")?.value.trim();

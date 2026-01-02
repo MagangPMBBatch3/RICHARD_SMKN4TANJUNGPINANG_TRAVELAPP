@@ -6,9 +6,6 @@ use App\Models\User;
 
 class UserQuery
 {
-    /**
-     * Mendapatkan semua user (bisa ditambahkan search filter)
-     */
     public function getUsers($_, array $args)
     {
         $query = User::query();

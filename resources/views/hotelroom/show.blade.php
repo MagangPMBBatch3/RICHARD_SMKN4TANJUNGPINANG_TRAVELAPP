@@ -8,12 +8,10 @@
 
     <div class="bg-white rounded-xl shadow p-6">
 
-        <!-- Foto -->
         <img id="roomPhoto"
              class="w-full h-80 object-cover rounded-xl mb-6"
              src="https://via.placeholder.com/800x400">
 
-        <!-- Info -->
         <h1 id="roomName" class="text-2xl font-bold mb-1">Memuat...</h1>
         <p id="hotelName" class="text-gray-500 mb-2"></p>
 
@@ -29,7 +27,6 @@
 
         <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-xl">
 
-    <!-- Check In -->
     <div>
         <label class="block text-sm font-medium mb-1">
             Check-in
@@ -40,7 +37,6 @@
             class="w-full border rounded-lg px-3 py-2">
     </div>
 
-    <!-- Check Out -->
     <div>
         <label class="block text-sm font-medium mb-1">
             Check-out
@@ -51,7 +47,6 @@
             class="w-full border rounded-lg px-3 py-2">
     </div>
 
-    <!-- Jumlah -->
     <div>
         <label class="block text-sm font-medium mb-1">
             Jumlah Kamar

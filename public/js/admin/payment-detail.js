@@ -15,9 +15,6 @@ async function gql(query, variables = {}) {
     return json.data;
 }
 
-/* =========================
-   LOAD PAYMENT DETAIL
-========================= */
 async function loadDetail() {
     const query = `
         query ($id: ID!) {
@@ -52,9 +49,6 @@ async function loadDetail() {
         p.proof ? "/storage/" + p.proof : "";
 }
 
-/* =========================
-   CONFIRM PAYMENT
-========================= */
 async function confirmPayment() {
     if (!confirm("Konfirmasi pembayaran ini?")) return;
 
@@ -79,9 +73,6 @@ async function confirmPayment() {
     window.location.href = "/admin/payments";
 }
 
-/* =========================
-   REJECT PAYMENT
-========================= */
 async function rejectPayment() {
     if (!confirm("Yakin ingin reject pembayaran ini?")) return;
 

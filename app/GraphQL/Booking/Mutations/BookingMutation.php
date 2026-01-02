@@ -14,9 +14,6 @@ use Carbon\Carbon;
 
 class BookingMutation
 {
-    /* =====================================================
-     * CREATE BOOKING (HOTEL / TRANSPORT / MIXED)
-     * ===================================================== */
     public function createBooking($_, array $args, GraphQLContext $context)
 {
     $user = $context->user();
@@ -51,7 +48,6 @@ class BookingMutation
 
         foreach ($input['items'] as $item) {
 
-            /* ==================== HOTEL ==================== */
             if ($item['item_type'] === 'hotel_room') {
 
                 $room = HotelRoom::lockForUpdate()
@@ -87,7 +83,6 @@ class BookingMutation
                 $total += $subtotal;
             }
 
-            /* ================= TRANSPORT ================= */
             if ($item['item_type'] === 'transport_schedule') {
 
                 $schedule = TransportSchedule::findOrFail($item['reference_id']);
@@ -113,7 +108,6 @@ class BookingMutation
             }
         }
 
-        /* ================= GUESTS ================= */
         foreach ($input['passengers'] ?? [] as $i => $guest) {
             BookingGuest::create([
                 'booking_id' => $booking->id,
@@ -124,7 +118,6 @@ class BookingMutation
             ]);
         }
 
-        /* ================= UPDATE TOTAL_PRICE ================= */
         $booking->update([
             'total_price' => $total
         ]);
@@ -134,7 +127,6 @@ class BookingMutation
 }
 
 
-    /* ================ DELETE BOOKING =================== */
     public function deleteBooking($_, array $args)
 {
     $userId = auth()->id();
@@ -173,7 +165,6 @@ public function update($_, array $args)
 
     return DB::transaction(function () use ($booking, $args) {
 
-        /* ======= KEMBALIKAN STOK LAMA ======= */
         foreach ($booking->items as $item) {
             if ($item->item_type === 'hotel_room') {
                 HotelRoom::where('id', $item->reference_id)
@@ -185,7 +176,6 @@ public function update($_, array $args)
 
         $total = 0;
 
-        /* ============ RE-CREATE ITEM HOTEL ============= */
         foreach ($args['items'] as $item) {
 
             $room = HotelRoom::lockForUpdate()

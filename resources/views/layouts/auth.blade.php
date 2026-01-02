@@ -6,7 +6,6 @@
     <title>@yield('title', 'Login')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Tailwind CSS (via CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -16,7 +15,6 @@
             @yield('heading', 'Authentication')
         </h1>
 
-        {{-- Tempat konten halaman login/register --}}
         @yield('content')
     </div>
 
